@@ -33,9 +33,15 @@
                         (if (eq? k (car pair))
                           #t
                           (and (not-eq? k-pos (cadr pair)) ; should not in same row
-                              (not-eq? k-pos (+ (- (length positions) (car pair)) (cadr pair))) ; upper cross
-                              (not-eq? k-pos (- (- (length positions) (car pair)) (cadr pair)))))) ; lower cross
+                              (not-eq? k-pos (+ (cadr pair) (- (length positions) (car pair)))) ; upper cross
+                              (not-eq? k-pos (- (cadr pair) (- (length positions) (car pair))))))) ; lower cross
                       positions))))
+
+(define empty-board '())
+
+(define (adjoin-position new-row k rest-of-queens)
+  (append rest-of-queens (list (list k new-row)))
+)
 
 (define (queens board-size)
   (define (queen-cols k)
